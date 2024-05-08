@@ -21,9 +21,9 @@ In addition, the TUI can also store up to 10 configurations to easily switch bet
   - move camera (use upper case letters for larger steps)
     - pan:  `a` + `d`
     - tilt: `w` + `s`
-    - zoom: `q` + `y`
+    - zoom: `e` + `c`
   - reset camera to "forward" direction: `r`
-  - apply configuration: `<number`
   - save configuration: `<Shift> + <number>`
+  - apply configuration: `<number`
   - open preview window: `p`
   - quit: `<ESC>` (or just `kill`/`<Ctrl> + c` it)

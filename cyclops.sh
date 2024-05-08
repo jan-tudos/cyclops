@@ -17,6 +17,7 @@ declare -rA UPPER_DIGITS=(['!']=1 ['"']=2 ['§']=3 ['$']=4 ['%']=5 ['&']=6 ['/']
 # - https://stackoverflow.com/a/24016147
 function save_term()
 {
+	# save current terminal content
 	printf '\e[?1049h'
 
 	# hide cursor
@@ -25,10 +26,11 @@ function save_term()
 
 function restore_term()
 {
-	printf '\e[?1049l'
-
 	# show cursor
 	printf '\e[?25h'
+
+	# restore saved terminal content
+	printf '\e[?1049l'
 }
 
 function clear_term()
@@ -164,7 +166,7 @@ function show_tui()
 	write_at 5 5 "Tilt: ${VAL[tilt]}"
 	write_at 5 6 "Zoom: ${VAL[zoom]}"
 	write_at 1 9 "Saved: ${!SAVED[*]}"
-	write_at 1 13 'Use w, a, s, d to pan and tilt the camera. q and y to zoom in and out. Hold Shift for larger steps.
+	write_at 1 13 'Use w, a, s, d to pan and tilt the camera. e and c to zoom in and out. Hold Shift for larger steps.
 Shift + <number> to store a state. <number> to recall a stored state.
 r to reset to standard "forward" direction. p for a preview using ffplay.
 ESC or Ctrl + c to exit.'
@@ -216,17 +218,17 @@ function main_loop()
 				# clear it; but also note the fact (we abuse FACTOR for that)
 				FACTOR=0
 				until ! read -rsn1 -t0; do read -rsn1; FACTOR=1; done
-				(( FACTOR == 0 )) && return
+				(( FACTOR == 0 )) && return # ESC key pressed, we are done
 				continue ;;
 		esac
 
 		case "$REPLY" in
-			[dD]) adjust 'pan' $(( FACTOR *= -1 )) ;;
 			[aA]) adjust 'pan' $FACTOR ;;
+			[dD]) adjust 'pan' $(( FACTOR *= -1 )) ;;
 			[wW]) adjust 'tilt' $FACTOR ;;
 			[sS]) adjust 'tilt' $(( FACTOR *= -1 )) ;;
-			[qQ]) adjust 'zoom' $FACTOR ;;
-			[yY]) adjust 'zoom' $(( FACTOR *= -1 )) ;;
+			[eE]) adjust 'zoom' $FACTOR ;;
+			[cC]) adjust 'zoom' $(( FACTOR *= -1 )) ;;
 			[r]) reset ;;
 			[p]) preview ;;
 			[[:digit:]]) load_state "$REPLY";;
