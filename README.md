@@ -1,5 +1,5 @@
 # Cyclops
-Simple and convinent TUI for the OBSBOT Tiny 4k webcam (or any other webcam controllable via `v4l2-ctl`).
+Simple and convinient TUI for the OBSBOT Tiny 4k webcam (or any other webcam controllable via `v4l2-ctl`).
 
 The OBSBOT webcam allows to adjust its tilt, pan, and zoom via software.
 Unfortunately, there seems to be no implementation that supports convenient WASD controls instead of providing raw numerical values.
